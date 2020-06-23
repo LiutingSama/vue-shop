@@ -2,13 +2,34 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
+import Welcome from '../components/Welcome.vue'
+import Users from '../components/Users.vue'
+import Categories from '../components/Categories.vue'
+import Goods from '../components/Goods.vue'
+import Orders from '../components/Orders.vue'
+import Params from '../components/Params.vue'
+import Reports from '../components/Reports.vue'
+import Rights from '../components/Rights.vue'
+import Roles from '../components/Roles.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home }
+  {
+    path: '/home', component: Home, redirect: '/welcome', children: [
+      { path: '/welcome', component: Welcome },
+      { path: '/users', component: Users },
+      { path: '/categories', component: Categories },
+      { path: '/goods', component: Goods },
+      { path: '/orders', component: Orders },
+      { path: '/params', component: Params },
+      { path: '/reports', component: Reports },
+      { path: '/rights', component: Rights },
+      { path: '/roles', component: Roles }
+    ]
+  }
 ]
 
 const router = new VueRouter({
@@ -25,6 +46,10 @@ router.beforeEach((to, from, next) => {
   // 如果用户直接访问登录页，若存在token，则跳转到home
   if (to.path === '/login') {
     if (tokenStr) return next('home')
+    next()
+  }
+  if (to.path === '/welcome') {
+    window.sessionStorage.removeItem('activePath')
     next()
   }
   // 没有token，强制跳转到登录页
