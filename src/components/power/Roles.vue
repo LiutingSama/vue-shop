@@ -63,7 +63,7 @@
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column label="角色名称" prop="roleName"></el-table-column>
         <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
-        <el-table-column label="操作" prop="index" width="300px">
+        <el-table-column label="操作" width="300px">
           <template slot-scope="scope">
             <el-button size="mini" icon="el-icon-edit" type="primary">编辑</el-button>
             <el-button size="mini" icon="el-icon-delete" type="danger">删除</el-button>
