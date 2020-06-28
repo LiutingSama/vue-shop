@@ -38,7 +38,12 @@
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <!-- 循环渲染tag标签 -->
-                <el-tag v-for="(item,i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i,scope.row)">{{item}}</el-tag>
+                <el-tag
+                  v-for="(item,i) in scope.row.attr_vals"
+                  :key="i"
+                  closable
+                  @close="handleClose(i,scope.row)"
+                >{{item}}</el-tag>
                 <!-- 输入文本框 -->
                 <el-input
                   class="input-new-tag"
@@ -92,7 +97,12 @@
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <!-- 循环渲染tag标签 -->
-                <el-tag v-for="(item,i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i,scope.row)">{{item}}</el-tag>
+                <el-tag
+                  v-for="(item,i) in scope.row.attr_vals"
+                  :key="i"
+                  closable
+                  @close="handleClose(i,scope.row)"
+                >{{item}}</el-tag>
                 <!-- 输入文本框 -->
                 <el-input
                   class="input-new-tag"
@@ -294,10 +304,10 @@ export default {
     },
 
     // 按钮展示修改对话框
-    async showEditDialog(attr_id) {
+    async showEditDialog(attrId) {
       // 查询当前参数的信息
       const { data: res } = await this.$http.get(
-        `categories/${this.cateId}/attributes/${attr_id}`,
+        `categories/${this.cateId}/attributes/${attrId}`,
         {
           attr_sel: this.activeName
         }
@@ -312,7 +322,7 @@ export default {
       this.$refs.editFormRef.resetFields()
     },
 
-    //修改参数提交按钮
+    // 修改参数提交按钮
     editParams() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
@@ -330,7 +340,7 @@ export default {
     },
 
     // 删除参数
-    async delParams(attr_id) {
+    async delParams(attrId) {
       const confirmResult = await this.$confirm(
         '此操作将永久删除该参数, 是否继续?',
         '提示',
@@ -344,7 +354,7 @@ export default {
       if (confirmResult === 'cancel') return this.$message.info('已取消删除')
       // 删除的业务逻辑
       const { data: res } = await this.$http.delete(
-        `categories/${this.cateId}/attributes/${attr_id}`
+        `categories/${this.cateId}/attributes/${attrId}`
       )
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       this.getSelectCateParam()
@@ -361,12 +371,12 @@ export default {
       row.attr_vals.push(row.inputValue.trim())
       row.inputValue = ''
       row.inputVisible = false
-      
+
       this.saveAttrVals(row)
     },
 
     // 将对 attr_vals 的操作保存到数据库
-    async saveAttrVals(row){
+    async saveAttrVals(row) {
       // 发起请求，保存这次操作
       const { data: res } = await this.$http.put(
         `categories/${this.cateId}/attributes/${row.attr_id}`,
@@ -389,11 +399,10 @@ export default {
     },
 
     // 删除对应的参数可选项
-    handleClose(i,row){
-      row.attr_vals.splice(i,1)
+    handleClose(i, row) {
+      row.attr_vals.splice(i, 1)
       this.saveAttrVals(row)
     }
-
   },
 
   created() {
