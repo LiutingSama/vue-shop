@@ -19,7 +19,7 @@
             :options="cateList"
             :props="cascaderProps"
             @change="cateChange"
-            popper-class="addCatePopper"
+            popper-class="catePopper"
             clearable
           ></el-cascader>
         </el-col>
